@@ -1,95 +1,131 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../firebase.js";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { TextInput, Button, PasswordInput, Title } from "@mantine/core";
+import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import "./style.css";
 
 export default function Home() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmpassword] = useState("");
+
+  const router = useRouter();
+
+  const handleSignUp = async () => {
+    if (password !== confirmpassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    try {
+      const user1 = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+        confirmpassword
+      );
+      toast.success("SIGNUP SUCCESSFUL");
+      router.push("/login");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const notify = () => {
+    if (
+      firstName === "" ||
+      lastName === "" ||
+      email === "" ||
+      password === "" ||
+      confirmpassword === ""
+    ) {
+      toast.error("Please input all fields");
+    } else {
+      handleSignUp();
+    }
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <div className="container1">
+      <div className="centerdiv1">
+        <h1>SIGNUP</h1>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+        <TextInput
+          className="emailInput1"
+          placeholder="David"
+          label="First Name"
+          value={firstName}
+          withAsterisk
+          onChange={(e) => setFirstName(e.target.value)}
         />
+        <TextInput
+          className="emailInput1"
+          placeholder="John"
+          label="Last Name"
+          value={lastName}
+          withAsterisk
+          onChange={(e) => setLastname(e.target.value)}
+        />
+
+        <TextInput
+          className="emailInput1"
+          placeholder="abc@john.com"
+          label="Enter email"
+          value={email}
+          withAsterisk
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <PasswordInput
+          className="emailInput1"
+          placeholder="********"
+          label="Enter Password"
+          value={password}
+          withAsterisk
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <PasswordInput
+          className="emailInput1"
+          placeholder="ConfirmPassword"
+          label="Confirm Password"
+          withAsterisk
+          onChange={(e) => setConfirmpassword(e.target.value)}
+        />
+
+        <Button
+          color="orange"
+          size="md"
+          onClick={() => {
+            notify();
+          }}
+        >
+          Signup
+        </Button>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "1rem",
+          }}
+        >
+          <Title style={{ fontSize: "15px" }}>
+            Already have an account?
+            <Link style={{ color: "red" }} href="/login">
+              {" "}
+              Login
+            </Link>
+          </Title>
+        </div>
+
+        <Toaster />
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }

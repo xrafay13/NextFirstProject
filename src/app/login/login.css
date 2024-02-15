@@ -1,0 +1,94 @@
+.container{
+    background-color: white;
+    display: flex;
+    align-items: center;
+    background-image: url('https://images.pexels.com/photos/268976/pexels-photo-268976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-repeat: no-repeat;
+    background-size: cover;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.centerdiv{ 
+    background-color: white;
+    width: 30rem;
+    height: 35rem;
+    border-radius: 2px;  
+    text-align: center;
+    border: 3px solid orange;
+    justify-content: center;
+    
+    background-size: cover; 
+    background-position: center;
+   
+}
+
+
+.emailInput{
+    text-align: left;
+    font-weight: bold;
+    text-transform: bold;
+    padding: 0.8rem;
+    margin-top: 0;
+    
+    
+}
+
+.signup-link a {
+    color: white; 
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .signup-link a:hover {
+    text-decoration: underline;
+    color: green;
+  }
+  
+
+  .horizontal-line{
+
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 20px 10px;
+    
+  }
+  .horizontal-line hr {
+    flex-grow: 1;
+    background: lightgray;
+    height: 1px;
+    border: none;
+    margin: 0 10px;
+    
+  }
+  
+  .horizontal-line span {
+    color: lightgray;
+  }
+
+  
+
+  .google-button{
+   
+   color : white;
+   background-color: red;
+   width:90%;
+   height:2.5rem;
+   margin: 1.5rem;
+   margin-top: 3rem;
+   display: flex;
+   border: none;
+
+   
+    
+    
+   
+  }
+
+  .google-button:hover {
+    border-color: orange;
+  }
